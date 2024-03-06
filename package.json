@@ -1,21 +1,24 @@
 {
-  "name": "@sanity/scheduled-publishing",
+  "name": "@burgersonbrioche/sanity-scheduled-publishing",
   "version": "1.3.0",
   "description": "",
   "keywords": [
     "sanity",
     "plugin"
   ],
-  "homepage": "https://github.com/sanity-io/sanity-plugin-scheduled-publishing#readme",
+  "homepage": "https://github.com/BurgersOnBrioche/sanity-plugin-scheduled-publishing#readme",
   "bugs": {
-    "url": "https://github.com/sanity-io/sanity-plugin-scheduled-publishing/issues"
+    "url": "https://github.com/BurgersOnBrioche/sanity-plugin-scheduled-publishing/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:sanity-io/sanity-plugin-scheduled-publishing.git"
+    "url": "git@github.com:BurgersOnBrioche/sanity-plugin-scheduled-publishing.git"
   },
   "license": "MIT",
-  "author": "Sanity.io <hello@sanity.io>",
+  "author": "Burgers On Brioche <support@burgersonbrioche.com>",
+  "contributors": [
+    "Sanity.io <hello@sanity.io>"
+  ],
   "exports": {
     ".": {
       "types": "./lib/src/index.d.ts",

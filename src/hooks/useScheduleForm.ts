@@ -7,6 +7,7 @@ export default function useScheduleForm(schedule?: Schedule) {
   const [formData, setFormData] = useState<ScheduleFormData | null>(
     schedule && schedule?.executeAt
       ? {
+          action: schedule.action,
           date: schedule.executeAt,
         }
       : null

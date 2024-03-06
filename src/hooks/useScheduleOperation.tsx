@@ -2,7 +2,7 @@ import {useToast} from '@sanity/ui'
 import pluralize from 'pluralize'
 import React from 'react'
 import ToastDescription from '../components/toastDescription/ToastDescription'
-import {Schedule} from '../types'
+import {Schedule, ScheduleAction} from '../types'
 import getErrorMessage from '../utils/getErrorMessage'
 import useTimeZone from './useTimeZone'
 import {useScheduleApi} from './useScheduleApi'
@@ -70,16 +70,18 @@ export default function useScheduleOperation() {
   const api = useScheduleApi()
 
   async function createSchedule({
+    action,
     date,
     displayToast = true,
     documentId,
   }: {
+    action: ScheduleAction
     date: string
     displayToast?: boolean
     documentId: string
   }) {
     try {
-      const data = await api.create({date, documentId})
+      const data = await api.create({action, date, documentId})
 
       window.dispatchEvent(
         scheduleCustomEvent(ScheduleEvents.create, {
@@ -272,10 +274,12 @@ export default function useScheduleOperation() {
   }
 
   async function updateSchedule({
+    action,
     date,
     displayToast = true,
     scheduleId,
   }: {
+    action: ScheduleAction
     date: string
     displayToast?: boolean
     scheduleId: string
@@ -286,6 +290,7 @@ export default function useScheduleOperation() {
       window.dispatchEvent(scheduleCustomEvent(ScheduleEvents.update, {detail: {date, scheduleId}}))
 
       if (displayToast) {
+        const prefix = action === 'publish' ? 'Publishing on ' : 'Unpublishing on '
         toast.push({
           closable: true,
           description: (
@@ -293,7 +298,7 @@ export default function useScheduleOperation() {
               body={formatDateTz({
                 date: new Date(date),
                 includeTimeZone: true,
-                prefix: 'Publishing on ',
+                prefix,
               })}
               title="Schedule updated"
             />

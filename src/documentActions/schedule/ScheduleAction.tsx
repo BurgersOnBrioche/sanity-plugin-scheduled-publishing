@@ -23,8 +23,13 @@ import useScheduleOperation from '../../hooks/useScheduleOperation'
 import {debugWithName} from '../../utils/debug'
 import {NewScheduleInfo} from './NewScheduleInfo'
 import Schedules from './Schedules'
+import {ScheduleAction as ScheduleActionType} from '../../types'
 
 const debug = debugWithName('ScheduleAction')
+
+interface Props extends DocumentActionProps {
+  action: ScheduleActionType
+}
 
 /*
  * NOTE: Document actions are re-run whenever `onComplete` is called.
@@ -41,8 +46,8 @@ const debug = debugWithName('ScheduleAction')
  * empty dependency arrays.
  */
 
-export const ScheduleAction = (props: DocumentActionProps): DocumentActionDescription => {
-  const {draft, id, liveEdit, onComplete, published, type} = props
+export const ScheduleAction = (props: Props): DocumentActionDescription => {
+  const {draft, id, liveEdit, onComplete, published, type, action} = props
 
   const currentUser = useCurrentUser()
   const [permissions, isPermissionsLoading] = useDocumentPairPermissions({
@@ -64,6 +69,7 @@ export const ScheduleAction = (props: DocumentActionProps): DocumentActionDescri
     isInitialLoading,
     schedules,
   } = usePollSchedules({
+    action,
     documentId: id,
     state: 'scheduled',
   })
@@ -90,11 +96,11 @@ export const ScheduleAction = (props: DocumentActionProps): DocumentActionDescri
     }
 
     // Create schedule then close dialog
-    createSchedule({date: formData.date, documentId: id}).then(onComplete)
-  }, [onComplete, createSchedule, id, formData?.date])
+    createSchedule({action: formData.action, date: formData.date, documentId: id}).then(onComplete)
+  }, [onComplete, createSchedule, id, formData?.date, formData?.action])
 
-  const title = hasExistingSchedules ? 'Edit Schedule' : 'Schedule'
-
+  let title = hasExistingSchedules ? 'Edit Schedule' : 'Schedule'
+  title += ` ${action === 'publish' ? ' Publish' : ' Unpublish'}`
   if (insufficientPermissions) {
     return {
       disabled: true,
@@ -138,7 +144,7 @@ export const ScheduleAction = (props: DocumentActionProps): DocumentActionDescri
           {hasExistingSchedules ? (
             <Schedules schedules={schedules} />
           ) : (
-            <EditScheduleForm onChange={onFormChange} value={formData}>
+            <EditScheduleForm action={action} onChange={onFormChange} value={formData}>
               <NewScheduleInfo id={id} schemaType={type} />
             </EditScheduleForm>
           )}
@@ -169,3 +175,9 @@ export const ScheduleAction = (props: DocumentActionProps): DocumentActionDescri
     title: tooltip && <Box style={{maxWidth: '315px'}}>{tooltip}</Box>,
   }
 }
+
+export const SchedulePublishAction = (props: DocumentActionProps) =>
+  ScheduleAction({...props, action: 'publish'})
+
+export const ScheduleUnPublishAction = (props: DocumentActionProps) =>
+  ScheduleAction({...props, action: 'unpublish'})

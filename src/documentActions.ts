@@ -1,5 +1,8 @@
 import {DocumentActionComponent} from 'sanity'
-import {ScheduleAction} from './documentActions/schedule'
+import {
+  SchedulePublishAction,
+  ScheduleUnPublishAction,
+} from './documentActions/schedule/ScheduleAction'
 
 type Action = DocumentActionComponent
 
@@ -7,11 +10,12 @@ export default function resolveDocumentActions(existingActions: Action[]): Actio
   // Add schedule action after default publish action
   const index = existingActions.findIndex((a) => a.action === 'publish')
   if (index < 0) {
-    return [ScheduleAction, ...existingActions]
+    return [SchedulePublishAction, ScheduleUnPublishAction, ...existingActions]
   }
   return [
     ...existingActions.slice(0, index + 1),
-    ScheduleAction,
+    SchedulePublishAction,
+    ScheduleUnPublishAction,
     ...existingActions.slice(index + 1),
   ]
 }
