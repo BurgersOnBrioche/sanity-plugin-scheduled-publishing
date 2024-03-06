@@ -1,4 +1,6 @@
-# Scheduled Publishing plugin for Sanity.io
+# Scheduled Publishing and Unpublishing plugin for Sanity.io
+
+## This is forked from @sanity/scheduled-publishing and adds unpublishing 
 
 > This is a **Sanity Studio v3** plugin.
 > For the v2 version, please refer to the [v2-branch](https://github.com/sanity-io/sanity-plugin-scheduled-publishing/tree/studio-v2).
@@ -51,13 +53,13 @@ Schedule your content for future publication and organise upcoming releases – 
 ## Installation
 
 ```
-npm install --save @sanity/scheduled-publishing
+npm install --save @burgersonbrioche/sanity-scheduled-publishing
 ```
 
 or
 
 ```
-yarn add @sanity/scheduled-publishing
+yarn add @burgersonbrioche/sanity-scheduled-publishing
 ```
 
 ## Usage
@@ -65,7 +67,7 @@ yarn add @sanity/scheduled-publishing
 Add it as a plugin in sanity.config.ts (or .js):
 
 ```js
-import {scheduledPublishing} from '@sanity/scheduled-publishing'
+import {scheduledPublishing} from '@burgersonbrioche/sanity-scheduled-publishing'
 
 export default defineConfig({
   // ...
@@ -103,7 +105,7 @@ The Schedule document action allows users to both create and edit existing sched
 so you should remove it from types that should NOT have it.
 
 ```js
-import {scheduledPublishing, ScheduleAction} from '@sanity/scheduled-publishing'
+import {scheduledPublishing, ScheduleAction} from '@burgersonbrioche/sanity-scheduled-publishing'
 
 export default defineConfig({
   // ...
@@ -133,7 +135,7 @@ The Scheduled document badge displays whether the current document is scheduled 
 so you should remove it from types that should NOT have it.
 
 ```js
-import {scheduledPublishing, ScheduledBadge} from '@sanity/scheduled-publishing'
+import {scheduledPublishing, ScheduledBadge} from '@burgersonbrioche/sanity-scheduled-publishing'
 
 export default defineConfig({
   // ...
@@ -179,7 +181,7 @@ More information can be found on the [Scheduling API][scheduling-api] page.
 
   ```sh
   # Yarn
-  yarn upgrade @sanity/scheduled-publishing
+  yarn upgrade @burgersonbrioche/sanity-scheduled-publishing
 
   # NPM
   npm update @vvo/tzdb --legacy-peer-deps

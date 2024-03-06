@@ -49,6 +49,7 @@ export interface ScheduleFilter {
 
 export interface ScheduleFormData {
   date: string
+  action: ScheduleAction
 }
 
 export type ScheduleSort = 'createdAt' | 'executeAt'

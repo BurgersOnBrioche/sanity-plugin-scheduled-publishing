@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useMemo} from 'react'
 import useSWR from 'swr'
-import {Schedule, ScheduleState} from '../types'
+import {Schedule, ScheduleAction, ScheduleState} from '../types'
 import {sortByExecuteDate} from '../utils/sortByExecuteDate'
 import {
   ScheduleDeleteEvent,
@@ -52,15 +52,19 @@ const NO_SCHEDULES: Schedule[] = []
 /**
  * Poll for all schedules
  */
-function usePollSchedules({documentId, state}: {documentId?: string; state?: ScheduleState} = {}): {
+function usePollSchedules({
+  action,
+  documentId,
+  state,
+}: {action?: ScheduleAction; documentId?: string; state?: ScheduleState} = {}): {
   error: Error
   isInitialLoading: boolean
   schedules: Schedule[]
 } {
   const url = useScheduleBaseUrl()
   const queryKey: QueryKey = useMemo(
-    () => ({params: {documentIds: documentId, state}, url}),
-    [url, documentId, state]
+    () => ({params: {documentIds: documentId, state, action}, url}),
+    [url, documentId, state, action]
   )
 
   const fetcher = useFetcher(queryKey)
