@@ -25,10 +25,11 @@ const DialogScheduleEdit = (props: DialogScheduleEditProps) => {
     }
     // Update schedule then close self
     updateSchedule({
+      action: formData.action,
       date: formData.date,
       scheduleId: schedule.id,
     }).then(onClose)
-  }, [schedule.id, updateSchedule, onClose, formData?.date])
+  }, [schedule.id, updateSchedule, onClose, formData?.date, formData?.action])
 
   return (
     <Dialog
@@ -43,13 +44,13 @@ const DialogScheduleEdit = (props: DialogScheduleEditProps) => {
           />
         </Box>
       }
-      header={<DialogHeader title="Edit schedule" />}
+      header={<DialogHeader title={`Edit ${formData?.action} schedule`} />}
       id="time-zone"
       onClose={onClose}
       width={1}
     >
       <Box padding={4}>
-        <EditScheduleForm onChange={onFormChange} value={formData} />
+        <EditScheduleForm action={schedule.action} onChange={onFormChange} value={formData} />
       </Box>
     </Dialog>
   )

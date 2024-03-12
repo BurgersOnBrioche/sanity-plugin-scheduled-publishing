@@ -1,16 +1,17 @@
 import {Card, Stack} from '@sanity/ui'
 import React, {useState} from 'react'
 import useTimeZone from '../../hooks/useTimeZone'
-import {ScheduleFormData} from '../../types'
+import {ScheduleAction, ScheduleFormData} from '../../types'
 import {DateTimeInput} from '../dateInputs'
 
 interface Props {
   onChange?: (formData: ScheduleFormData) => void
   value?: ScheduleFormData | null
+  action: ScheduleAction
 }
 
 const ScheduleForm = (props: Props) => {
-  const {onChange, value} = props
+  const {onChange, value, action} = props
 
   const {getCurrentZoneDate} = useTimeZone()
 
@@ -22,7 +23,7 @@ const ScheduleForm = (props: Props) => {
 
   const handleChange = (date: string | null) => {
     if (date && onChange) {
-      onChange({date})
+      onChange({action, date})
       setInputValue(date)
     }
   }
